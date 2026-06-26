@@ -12,9 +12,20 @@ export default function Home() {
   const [zonaFiltro, setZonaFiltro] = useState('tutte')
   const [tipoFiltro, setTipoFiltro] = useState('tutti')
   const [utente, setUtente] = useState(null)
+  const [profilo, setProfilo] = useState(null)
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => setUtente(data.user))
+    supabase.auth.getUser().then(async ({ data }) => {
+      setUtente(data.user)
+      if (data.user) {
+        const { data: prof } = await supabase
+          .from('profili')
+          .select('*')
+          .eq('id', data.user.id)
+          .maybeSingle()
+        setProfilo(prof)
+      }
+    })
     caricaPost()
   }, [])
 
@@ -33,6 +44,7 @@ export default function Home() {
   async function handleLogout() {
     await supabase.auth.signOut()
     setUtente(null)
+    setProfilo(null)
   }
 
   const postFiltrati = posts.filter((p) => {
@@ -94,7 +106,7 @@ export default function Home() {
         {postFiltrati.length > 0 && <div className="linea-pista" />}
 
         {postFiltrati.map((post) => (
-          <PostCard key={post.id} post={post} />
+          <PostCard key={post.id} post={post} utente={utente} profilo={profilo} />
         ))}
       </main>
     </div>

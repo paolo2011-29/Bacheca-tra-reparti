@@ -81,3 +81,60 @@ drop policy if exists "Solo utenti loggati possono caricare media" on storage.ob
 create policy "Solo utenti loggati possono caricare media"
   on storage.objects for insert
   with check (bucket_id = 'media' and auth.role() = 'authenticated');
+
+-- ============================================
+-- MI PIACE
+-- ============================================
+create table if not exists mi_piace (
+  id uuid primary key default gen_random_uuid(),
+  post_id uuid references posts(id) on delete cascade,
+  utente_id uuid references auth.users(id) on delete cascade,
+  created_at timestamp with time zone default now(),
+  unique (post_id, utente_id)
+);
+
+alter table mi_piace enable row level security;
+
+drop policy if exists "Tutti possono leggere i mi piace" on mi_piace;
+create policy "Tutti possono leggere i mi piace"
+  on mi_piace for select
+  using (true);
+
+drop policy if exists "Solo utenti loggati possono metter mi piace" on mi_piace;
+create policy "Solo utenti loggati possono metter mi piace"
+  on mi_piace for insert
+  with check (auth.uid() = utente_id);
+
+drop policy if exists "Ognuno toglie solo il proprio mi piace" on mi_piace;
+create policy "Ognuno toglie solo il proprio mi piace"
+  on mi_piace for delete
+  using (auth.uid() = utente_id);
+
+-- ============================================
+-- COMMENTI
+-- ============================================
+create table if not exists commenti (
+  id uuid primary key default gen_random_uuid(),
+  post_id uuid references posts(id) on delete cascade,
+  autore_id uuid references auth.users(id) on delete cascade,
+  autore_nome text not null,
+  testo text not null,
+  created_at timestamp with time zone default now()
+);
+
+alter table commenti enable row level security;
+
+drop policy if exists "Tutti possono leggere i commenti" on commenti;
+create policy "Tutti possono leggere i commenti"
+  on commenti for select
+  using (true);
+
+drop policy if exists "Solo utenti loggati possono commentare" on commenti;
+create policy "Solo utenti loggati possono commentare"
+  on commenti for insert
+  with check (auth.uid() = autore_id);
+
+drop policy if exists "Ognuno elimina solo il proprio commento" on commenti;
+create policy "Ognuno elimina solo il proprio commento"
+  on commenti for delete
+  using (auth.uid() = autore_id);

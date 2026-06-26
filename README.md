@@ -32,6 +32,11 @@ Il sito ora ha:
 
 Una volta pubblicate queste modifiche, ci vorranno comunque alcuni giorni/settimane prima che Google indicizzi il sito. Se vuoi accelerare, puoi registrare il sito su [Google Search Console](https://search.google.com/search-console) (gratuito) e chiedere l'indicizzazione manuale.
 
+### Mi piace e commenti
+Ogni post ora ha due bottoni in basso: **★ Mi piace** (un clic per metterlo, un altro per toglierlo) e **💬 Commenti** (clic per apri/chiudi la lista e scrivere un nuovo commento). Entrambi richiedono di essere loggati — se non lo sei, cliccando vieni mandato alla pagina di accesso.
+
+⚠️ **Importante:** queste funzioni usano due nuove tabelle nel database (`mi_piace` e `commenti`). Devi **rieseguire lo schema SQL aggiornato** su Supabase (SQL Editor → copia tutto `supabase/schema.sql` → Run) prima che funzionino sul sito pubblicato. Essendo lo schema "a prova di doppia esecuzione", puoi rilanciarlo tutto senza paura di duplicare le tabelle già esistenti (profili, posts) — verranno solo aggiunte le due nuove.
+
 ## Come pubblicarlo online (gratis) — passo per passo
 
 ### 1. Crea il database su Supabase
