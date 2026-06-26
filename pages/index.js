@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabaseClient'
 import { ZONE, TIPI_REPARTO } from '../lib/zone'
 import Navbar from '../components/Navbar'
 import PostCard from '../components/PostCard'
+import Seo from '../components/Seo'
 
 export default function Home() {
   const [posts, setPosts] = useState([])
@@ -42,6 +43,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-foresta">
+      <Seo />
       <Navbar utente={utente} onLogout={handleLogout} />
 
       <header className="max-w-3xl mx-auto px-5 pt-10 pb-6">

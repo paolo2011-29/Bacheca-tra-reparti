@@ -21,6 +21,17 @@ Il componente `components/Navbar.js` è già impostato per caricare il file `pub
 
 Nota: il formato JPEG non supporta lo sfondo trasparente. Il logo viene mostrato dentro un cerchio (per mitigare un eventuale sfondo bianco quadrato); se in futuro ottieni una versione PNG o SVG con sfondo trasparente, il risultato sarà ancora più curato — basta aggiornare il nome del file nella riga `src="/agesci-logo.jpg"` dentro `components/Navbar.js`.
 
+### SEO: titolo, descrizione, parole chiave e anteprime social
+Il sito ora ha:
+- **Titolo e descrizione** per ogni pagina (visibili nei risultati di Google) — gestiti dal componente `components/Seo.js`
+- **Parole chiave** pensate per chi cerca "bacheca scout", "reparti AGESCI", "campo scout", ecc.
+- **Anteprima social**: quando condividi il link su WhatsApp/Facebook/X, compare un'anteprima con titolo, descrizione e il logo
+- **`robots.txt`** e **`sitemap.xml`**: dicono a Google quali pagine indicizzare
+
+⚠️ **Importante:** dentro `components/Seo.js` e nei file `robots.txt`/`sitemap.xml` c'è scritto l'indirizzo `https://bacheca-tra-reparti.vercel.app`. Se il tuo sito ha un indirizzo diverso (es. un dominio personalizzato), aggiorna quell'indirizzo in tutti questi file.
+
+Una volta pubblicate queste modifiche, ci vorranno comunque alcuni giorni/settimane prima che Google indicizzi il sito. Se vuoi accelerare, puoi registrare il sito su [Google Search Console](https://search.google.com/search-console) (gratuito) e chiedere l'indicizzazione manuale.
+
 ## Come pubblicarlo online (gratis) — passo per passo
 
 ### 1. Crea il database su Supabase

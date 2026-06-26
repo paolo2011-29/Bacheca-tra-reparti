@@ -9,7 +9,7 @@ export default function Navbar({ utente, onLogout }) {
         </Link>
 
         <Link href="/" className="justify-self-center" aria-label="Vai alla bacheca">
-         {/* Logo ufficiale AGESCI: public/agesci-logo.jpeg */}
+          {/* Logo ufficiale AGESCI: public/agesci-logo.jpeg */}
           <img
             src="/agesci-logo.jpeg"
             alt="Logo AGESCI"

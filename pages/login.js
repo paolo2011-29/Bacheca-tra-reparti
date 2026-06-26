@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
 import Navbar from '../components/Navbar'
+import Seo from '../components/Seo'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -25,6 +26,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-foresta">
+      <Seo title="Accedi" description="Accedi a La Pista con la tua email per pubblicare foto, video e racconti del tuo reparto scout." path="/login" />
       <Navbar utente={null} onLogout={() => {}} />
       <main className="max-w-md mx-auto px-5 pt-16">
         <h1 className="font-display text-3xl text-pergamena mb-2">ACCEDI</h1>

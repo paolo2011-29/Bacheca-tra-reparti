@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bacheca-tra-reparti.vercel.app/sitemap.xml

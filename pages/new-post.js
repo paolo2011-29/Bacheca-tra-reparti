@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { supabase } from '../lib/supabaseClient'
 import Navbar from '../components/Navbar'
+import Seo from '../components/Seo'
 
 export default function NewPost() {
   const router = useRouter()
@@ -88,6 +89,7 @@ export default function NewPost() {
 
   return (
     <div className="min-h-screen bg-foresta">
+      <Seo title="Nuova tappa" path="/new-post" />
       <Navbar utente={utente} onLogout={async () => { await supabase.auth.signOut(); router.push('/') }} />
       <main className="max-w-md mx-auto px-5 pt-10 pb-16">
         <h1 className="font-display text-3xl text-pergamena mb-2">NUOVA TAPPA</h1>

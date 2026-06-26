@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { supabase } from '../lib/supabaseClient'
 import { REGIONI_PER_ZONA, ZONE, TIPI_REPARTO } from '../lib/zone'
 import Navbar from '../components/Navbar'
+import Seo from '../components/Seo'
 
 export default function Profilo() {
   const router = useRouter()
@@ -52,6 +53,7 @@ export default function Profilo() {
 
   return (
     <div className="min-h-screen bg-foresta">
+      <Seo title="Il tuo profilo" path="/profilo" />
       <Navbar utente={utente} onLogout={async () => { await supabase.auth.signOut(); router.push('/') }} />
       <main className="max-w-md mx-auto px-5 pt-10 pb-16">
         <h1 className="font-display text-3xl text-pergamena mb-2">IL TUO PROFILO</h1>
