@@ -37,6 +37,11 @@ Ogni post ora ha due bottoni in basso: **★ Mi piace** (un clic per metterlo, u
 
 ⚠️ **Importante:** queste funzioni usano due nuove tabelle nel database (`mi_piace` e `commenti`). Devi **rieseguire lo schema SQL aggiornato** su Supabase (SQL Editor → copia tutto `supabase/schema.sql` → Run) prima che funzionino sul sito pubblicato. Essendo lo schema "a prova di doppia esecuzione", puoi rilanciarlo tutto senza paura di duplicare le tabelle già esistenti (profili, posts) — verranno solo aggiunte le due nuove.
 
+### Salvare i post preferiti
+Ogni post ha un bottone **📑 Salva** (vicino a Mi piace e Commenti). Una volta salvato, diventa **🔖 Salvato**. Tutti i post salvati da un utente compaiono nella nuova pagina **"I miei salvati"**, raggiungibile dal link omonimo nella barra in alto (visibile solo quando si è loggati). Ogni persona vede solo i propri salvati, non quelli degli altri.
+
+⚠️ Anche questa funzione usa una nuova tabella (`salvati`) — ricorda di rieseguire lo schema SQL aggiornato su Supabase.
+
 ## Come pubblicarlo online (gratis) — passo per passo
 
 ### 1. Crea il database su Supabase

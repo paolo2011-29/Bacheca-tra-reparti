@@ -17,6 +17,9 @@ export default function PostCard({ post, utente, profilo }) {
   const [nuovoCommento, setNuovoCommento] = useState('')
   const [invioCommento, setInvioCommento] = useState(false)
 
+  const [salvato, setSalvato] = useState(false)
+  const [caricamentoSalvato, setCaricamentoSalvato] = useState(false)
+
   useEffect(() => {
     caricaConteggi()
   }, [])
@@ -43,6 +46,33 @@ export default function PostCard({ post, utente, profilo }) {
       .select('*', { count: 'exact', head: true })
       .eq('post_id', post.id)
     setNumeroCommenti(countCommenti || 0)
+
+    if (utente) {
+      const { data: salvatoData } = await supabase
+        .from('salvati')
+        .select('id')
+        .eq('post_id', post.id)
+        .eq('utente_id', utente.id)
+        .maybeSingle()
+      setSalvato(!!salvatoData)
+    }
+  }
+
+  async function toggleSalvato() {
+    if (!utente) {
+      window.location.href = '/login'
+      return
+    }
+    setCaricamentoSalvato(true)
+
+    if (salvato) {
+      await supabase.from('salvati').delete().eq('post_id', post.id).eq('utente_id', utente.id)
+      setSalvato(false)
+    } else {
+      await supabase.from('salvati').insert({ post_id: post.id, utente_id: utente.id })
+      setSalvato(true)
+    }
+    setCaricamentoSalvato(false)
   }
 
   async function toggleMiPiace() {
@@ -167,6 +197,15 @@ export default function PostCard({ post, utente, profilo }) {
           >
             <span>💬</span>
             <span>{numeroCommenti > 0 ? numeroCommenti : ''} Commenti</span>
+          </button>
+
+          <button
+            onClick={toggleSalvato}
+            disabled={caricamentoSalvato}
+            className={`flex items-center gap-1.5 ml-auto transition-colors ${salvato ? 'text-falo' : 'text-corda hover:text-pergamena'}`}
+          >
+            <span>{salvato ? '🔖' : '📑'}</span>
+            <span>{salvato ? 'Salvato' : 'Salva'}</span>
           </button>
         </div>
 

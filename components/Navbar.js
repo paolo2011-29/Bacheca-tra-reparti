@@ -22,6 +22,9 @@ export default function Navbar({ utente, onLogout }) {
         <div className="flex items-center gap-4 font-mono text-sm justify-self-end">
           {utente ? (
             <>
+              <Link href="/salvati" className="text-corda hover:text-pergamena hidden sm:inline">
+                🔖 Salvati
+              </Link>
               <Link href="/new-post" className="px-3 py-1.5 rounded bg-falo text-foresta-scuro font-semibold hover:opacity-90">
                 + Nuova tappa
               </Link>

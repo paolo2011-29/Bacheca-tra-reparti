@@ -83,8 +83,32 @@ create policy "Solo utenti loggati possono caricare media"
   with check (bucket_id = 'media' and auth.role() = 'authenticated');
 
 -- ============================================
--- MI PIACE
+-- SALVATI (segnalibro sui post)
 -- ============================================
+create table if not exists salvati (
+  id uuid primary key default gen_random_uuid(),
+  post_id uuid references posts(id) on delete cascade,
+  utente_id uuid references auth.users(id) on delete cascade,
+  created_at timestamp with time zone default now(),
+  unique (post_id, utente_id)
+);
+
+alter table salvati enable row level security;
+
+drop policy if exists "Ognuno legge solo i propri salvati" on salvati;
+create policy "Ognuno legge solo i propri salvati"
+  on salvati for select
+  using (auth.uid() = utente_id);
+
+drop policy if exists "Solo utenti loggati possono salvare" on salvati;
+create policy "Solo utenti loggati possono salvare"
+  on salvati for insert
+  with check (auth.uid() = utente_id);
+
+drop policy if exists "Ognuno toglie solo il proprio salvato" on salvati;
+create policy "Ognuno toglie solo il proprio salvato"
+  on salvati for delete
+  using (auth.uid() = utente_id);
 create table if not exists mi_piace (
   id uuid primary key default gen_random_uuid(),
   post_id uuid references posts(id) on delete cascade,
